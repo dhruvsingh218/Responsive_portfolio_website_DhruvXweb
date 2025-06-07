@@ -443,22 +443,22 @@ span {
 
     21%,
     40% {
-        content: "Backend Developer";
+        content: "Data Analyst";
     }
 
     41%,
     60% {
-        content: "UI / UX Designer";
+        content: "Power BI Developer";
     }
 
     61%,
     80% {
-        content: "Web Developer";
+        content: "Analytics Consultant";
     }
 
     81%,
     100% {
-        content: "Wordpress Developer";
+        content: "Excel Analyst";
     } 
 }
 
@@ -708,9 +708,13 @@ span {
     font-size: 1.6rem;
 }
 
-
+#skills{
+    height: fit-content !important;
+    padding: 50px;
+}
 
 .skills {
+      
     background: var(--second-bg-color);
 }
 
