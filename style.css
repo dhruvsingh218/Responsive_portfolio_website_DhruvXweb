@@ -1589,3 +1589,40 @@ span {
     right:5%;
   }
 }
+
+/* ===== HERO STATS COUNTER ===== */
+
+.stats-container{
+  display:flex;
+  gap:15px;
+  margin-top:20px;
+  flex-wrap:wrap;
+}
+.stat-box{
+  background:#080808;
+  border:2px solid var(--main-color);
+  box-shadow:0 0 20px var(--main-color);
+  border-radius:14px;
+  padding:15px 20px;
+  text-align:center;
+  min-width:120px;
+}
+
+.stat-box h2{
+  color:var(--main-color);
+  font-size:2.8rem;
+}
+
+.stat-box p{
+  font-size:1.3rem;
+}
+
+/* MOBILE */
+@media(max-width:768px){
+  .stats-container{
+    justify-content:center;
+  }
+  .stat-box{
+    min-width:170px;
+  }
+}
