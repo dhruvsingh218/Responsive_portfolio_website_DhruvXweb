@@ -194,3 +194,40 @@ function typeMessage(text){
   typing();
   chatMessages.scrollTop = chatMessages.scrollHeight;
 }
+
+// ===== ANIMATED STATS COUNTER =====
+
+const counters = document.querySelectorAll('.counter');
+
+const counterObserver = new IntersectionObserver(entries=>{
+  entries.forEach(entry=>{
+    if(entry.isIntersecting){
+
+      counters.forEach(counter=>{
+
+        const updateCount = ()=>{
+          const target = +counter.getAttribute('data-target');
+          const count = +counter.innerText;
+
+          const increment = target / 50;
+
+          if(count < target){
+            counter.innerText = Math.ceil(count + increment);
+            setTimeout(updateCount,30);
+          }else{
+            counter.innerText = target;
+          }
+        }
+
+        updateCount();
+
+      });
+
+      counterObserver.disconnect();
+    }
+  });
+});
+
+if(counters.length){
+  counterObserver.observe(counters[0]);
+}
