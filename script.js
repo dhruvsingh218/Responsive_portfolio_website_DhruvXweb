@@ -71,4 +71,126 @@ const projectSwiper = new Swiper('.projectSwiper', {
     }
 });
 
+// ===== LOR TEASER (SHOW EVERY VISIT BUT NOT AGAIN IN SAME SESSION) =====
 
+const certSection = document.querySelector("#certificates");
+const lorTeaser = document.getElementById("lorTeaser");
+const lorPopup = document.getElementById("lorPopup");
+const closeLor = document.getElementById("closeLor");
+
+// session check (sirf current visit ke liye)
+let lorClosed = sessionStorage.getItem("lorClosed");
+
+let teaserShown = false;
+
+const observer = new IntersectionObserver((entries)=>{
+    entries.forEach(entry=>{
+        if(entry.isIntersecting && !teaserShown && !lorClosed){
+
+            teaserShown = true;
+
+            setTimeout(()=>{
+                lorTeaser.classList.add("show");
+            },2000);
+        }
+    });
+},{ threshold:0.5 });
+
+observer.observe(certSection);
+
+// teaser click → popup open
+lorTeaser.onclick = ()=>{
+    lorPopup.style.display = "flex";
+}
+
+// popup close
+closeLor.onclick = ()=>{
+    lorPopup.style.display = "none";
+
+    // sirf current session ke liye memory
+    sessionStorage.setItem("lorClosed", "true");
+
+    // teaser hide
+    lorTeaser.style.display = "none";
+}
+
+// ===== CHATBOT LOGIC =====
+
+const chatbotToggle = document.getElementById("chatbotToggle");
+const chatbotBox = document.getElementById("chatbotBox");
+const closeChat = document.getElementById("closeChat");
+const chatMessages = document.getElementById("chatMessages");
+
+chatbotToggle.onclick = ()=>{
+  chatbotBox.style.display="flex";
+}
+
+closeChat.onclick = ()=>{
+  chatbotBox.style.display="none";
+}
+
+chatbotToggle.onclick = ()=>{
+  chatbotBox.style.display="flex";
+
+  if(!chatMessages.dataset.introShown){
+
+    typeMessage("Hi 👋 I’m Dhruv's AI assistant. Ask me anything!");
+
+    chatMessages.dataset.introShown = "true";
+  }
+}
+
+
+
+function botReply(type){
+
+ let reply="";
+
+ if(type==="about"){
+   reply="Dhruv is a Data Analyst & Automation Developer with experience in Power BI, Web Scraping, and Analytics.";
+ }
+
+ if(type==="skills"){
+   reply="Skills include Python, Power BI, Excel, Data Analysis, HTML, CSS, JavaScript & Automation.";
+ }
+
+ if(type==="projects"){
+   reply="You can explore Dhruv's animated websites, data dashboards, and automation projects in the Projects section.";
+ }
+
+ if(type==="resume"){
+   reply="Click the Download CV button in the Home section to view Dhruv's latest resume.";
+ }
+
+ if(type==="contact"){
+   reply="Use the Contact section below or connect via LinkedIn & WhatsApp icons.";
+ }
+
+ const msg = document.createElement("div");
+ msg.className="bot-msg";
+typeMessage(reply);
+
+ chatMessages.scrollTop = chatMessages.scrollHeight;
+}
+
+// ===== TYPEWRITER EFFECT =====
+
+function typeMessage(text){
+
+  const msg = document.createElement("div");
+  msg.className = "bot-msg";
+  chatMessages.appendChild(msg);
+
+  let i = 0;
+
+  function typing(){
+    if(i < text.length){
+      msg.innerHTML += text.charAt(i);
+      i++;
+      setTimeout(typing, 20); // speed (lower = faster)
+    }
+  }
+
+  typing();
+  chatMessages.scrollTop = chatMessages.scrollHeight;
+}
